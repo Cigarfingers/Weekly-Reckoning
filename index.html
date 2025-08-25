@@ -589,7 +589,7 @@
         const qualifier = (index >= 3 && index <= 7) ? ' 🏁' : '';
         const positionEmoji = `${medal}${qualifier}`;
 
-        const rowClass = index < 3 ? 'bg-yellow-50' : 'odd:bg-white even:bg-slate-50 hover:bg-slate-100';
+        const rowClass = index < 8 ? 'bg-yellow-50' : 'odd:bg-white even:bg-slate-50 hover:bg-slate-100';
         const attendanceBonus = player.weeksPlayed >= 6
           ? '<span class="inline-flex items-center px-2 py-0.5 text-xs font-semibold rounded-full bg-emerald-100 text-emerald-700">+3</span>'
           : '<span class="text-slate-400">—</span>';
