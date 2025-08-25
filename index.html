@@ -4,8 +4,29 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Discord Darts League - The Weekly Reckoning</title>
+
+  <!-- Tailwind theme (must come BEFORE the CDN script) -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              gold:     '#facc15',  // primary gold
+              goldDark: '#eab308',  // hover gold
+              coal:     '#0b0c10',  // dark bg start
+              graphite: '#1a1d22'   // dark bg end
+            }
+          },
+          boxShadow: { card: '0 20px 35px rgba(0,0,0,.25)' },
+          borderRadius: { xl2: '1rem' }
+        }
+      }
+    }
+  </script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+
   <style>
     .admin-only { display: none; }
     .is-admin .admin-only { display: block; }
@@ -13,42 +34,45 @@
     .admin-button { display: none; }
   </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
+
+<body class="min-h-screen bg-gradient-to-br from-brand-coal to-brand-graphite text-neutral-100">
   <!-- Admin Login Modal -->
-  <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-    <div class="bg-white rounded-lg p-6 w-96">
-      <h2 class="text-xl font-bold mb-4">Admin Login</h2>
+  <div id="loginModal" class="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+    <div class="bg-white rounded-xl2 p-6 w-96 shadow-card">
+      <h2 class="text-xl font-bold mb-4 text-gray-800">Admin Login</h2>
       <div class="space-y-4">
         <div>
-          <label class="block text-sm font-medium mb-1">Password:</label>
-          <input type="password" id="adminPassword" class="w-full border border-gray-300 rounded px-3 py-2" placeholder="Enter admin password">
+          <label class="block text-sm font-medium mb-1 text-gray-700">Password:</label>
+          <input type="password" id="adminPassword" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-gold/40 focus:border-brand-gold" placeholder="Enter admin password">
         </div>
         <div class="flex gap-2">
-          <button onclick="login()" class="flex-1 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Login</button>
-          <button onclick="viewOnly()" class="flex-1 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">View Only</button>
+          <button onclick="login()" class="flex-1 bg-brand-gold text-black px-4 py-2 rounded hover:bg-brand-goldDark shadow">Login</button>
+          <button onclick="viewOnly()" class="flex-1 bg-slate-600 text-white px-4 py-2 rounded hover:bg-slate-700 shadow">View Only</button>
         </div>
       </div>
     </div>
   </div>
 
   <div class="max-w-6xl mx-auto p-6">
-    <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
-      <div class="flex items-center justify-center mb-6">
+    <!-- Header / Hero -->
+    <div class="bg-white/5 rounded-xl2 shadow-card p-6 mb-6">
+      <div class="flex items-center justify-center mb-2">
         <div class="text-center">
           <div class="w-24 h-24 mx-auto mb-4">
             <img src="DDL.png" alt="Discord Darts League Logo" class="w-full h-full object-contain">
           </div>
-          <h1 class="text-4xl font-bold text-gray-800 mb-2">The Weekly Reckoning</h1>
-          <p class="text-lg text-gray-600">Discord Darts League Championship</p>
-         </div>
+          <h1 class="text-4xl font-extrabold text-brand-gold mb-1 tracking-tight">The Weekly Reckoning</h1>
+          <p class="text-sm md:text-base text-neutral-300">Discord Darts League Championship</p>
         </div>
       </div>
+    </div>
 
-      <!-- Admin Controls -->
-      <div class="admin-only flex flex-wrap gap-4 mb-6">
+    <!-- Admin Controls -->
+    <div class="admin-only bg-white text-gray-800 rounded-xl2 shadow-card p-6 mb-6">
+      <div class="flex flex-wrap items-center gap-4">
         <div class="flex items-center gap-2">
           <label class="font-medium">Week:</label>
-          <select id="weekSelect" onchange="setCurrentWeek(this.value)" class="border border-gray-300 rounded px-3 py-2">
+          <select id="weekSelect" onchange="setCurrentWeek(this.value)" class="border border-gray-300 rounded px-3 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-brand-gold/40 focus:border-brand-gold">
             <option value="1">Week 1</option>
             <option value="2">Week 2</option>
             <option value="3">Week 3</option>
@@ -59,7 +83,7 @@
           </select>
         </div>
 
-        <label class="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded cursor-pointer hover:bg-blue-600">
+        <label class="flex items-center gap-2 bg-brand-gold text-black px-4 py-2 rounded cursor-pointer hover:bg-brand-goldDark shadow">
           <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
             <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
           </svg>
@@ -67,79 +91,71 @@
           <input type="file" accept=".csv" onchange="handleCSVImport(event)" class="hidden">
         </label>
 
-        <button onclick="exportCSV()" class="flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+        <button onclick="exportCSV()" class="flex items-center gap-2 bg-emerald-600 text-white px-4 py-2 rounded hover:bg-emerald-700 shadow">
           <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z"/></svg>
           Export CSV
         </button>
 
-        <button onclick="clearAllData()" class="flex items-center gap-2 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+        <button onclick="clearAllData()" class="flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 shadow">
           <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12,6V9L16,5L12,1V4A8,8 0 0,0 4,12C4,13.57 4.46,15.03 5.24,16.26L6.7,14.8C6.25,13.97 6,13 6,12A6,6 0 0,1 12,6M18.76,7.74L17.3,9.2C17.74,10.04 18,11 18,12A6,6 0 0,1 12,18V15L8,19L12,23V20A8,8 0 0,0 20,12C20,10.43 19.54,8.97 18.76,7.74Z"/></svg>
           Clear All
         </button>
 
-        <button onclick="logout()" class="flex items-center gap-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
+        <button onclick="logout()" class="flex items-center gap-2 bg-slate-600 text-white px-4 py-2 rounded hover:bg-slate-700 shadow">
           Logout
         </button>
       </div>
+    </div>
 
-      <!-- Week Data Entry (Admin Only) -->
-      <div id="weekDataEntry" class="admin-only grid md:grid-cols-2 gap-6 mb-8">
+    <!-- Week Data Entry -->
+    <div class="admin-only bg-white text-gray-800 rounded-xl2 shadow-card p-6 mb-8">
+      <div id="weekDataEntry" class="grid md:grid-cols-2 gap-6">
         <div class="space-y-4">
           <h3 class="text-xl font-semibold">Week <span id="currentWeekDisplay">1</span> Results</h3>
 
-          <!-- Tournament Winner -->
           <div>
             <label class="block font-medium mb-1">Tournament Winner (7 points)</label>
-            <input type="text" id="winner" class="w-full border border-gray-300 rounded px-3 py-2" placeholder="Enter winner name">
+            <input type="text" id="winner" class="w-full text-gray-800 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-gold/40 focus:border-brand-gold" placeholder="Enter winner name">
           </div>
 
-          <!-- Tournament Runner Up -->
           <div>
             <label class="block font-medium mb-1">Tournament Runner Up (5 points)</label>
-            <input type="text" id="runnerUp" class="w-full border border-gray-300 rounded px-3 py-2" placeholder="Enter runner up name">
+            <input type="text" id="runnerUp" class="w-full text-gray-800 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-gold/40 focus:border-brand-gold" placeholder="Enter runner up name">
           </div>
 
-          <!-- Tournament Semi Finalists -->
           <div>
             <label class="block font-medium mb-1">Tournament Losing Semi Finalists (3 points each)</label>
             <div id="semiFinalists">
               <div class="flex gap-2 mb-2">
-                <input type="text" class="flex-1 border border-gray-300 rounded px-3 py-2" placeholder="Semi finalist 1">
-                <button onclick="removeSemiFinalist(this)" class="text-red-500 hover:text-red-700" title="Remove">
-                  <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/>
-                  </svg>
+                <input type="text" class="flex-1 text-gray-800 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-gold/40 focus:border-brand-gold" placeholder="Semi finalist 1">
+                <button onclick="removeSemiFinalist(this)" class="text-red-500 hover:text-red-600" title="Remove">
+                  <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/></svg>
                 </button>
               </div>
               <div class="flex gap-2 mb-2">
-                <input type="text" class="flex-1 border border-gray-300 rounded px-3 py-2" placeholder="Semi finalist 2">
-                <button onclick="removeSemiFinalist(this)" class="text-red-500 hover:text-red-700" title="Remove">
-                  <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/>
-                  </svg>
+                <input type="text" class="flex-1 text-gray-800 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-gold/40 focus:border-brand-gold" placeholder="Semi finalist 2">
+                <button onclick="removeSemiFinalist(this)" class="text-red-500 hover:text-red-600" title="Remove">
+                  <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/></svg>
                 </button>
               </div>
             </div>
-            <button onclick="addSemiFinalist()" class="flex items-center gap-1 text-blue-500 hover:text-blue-700">
+            <button onclick="addSemiFinalist()" class="flex items-center gap-1 text-brand-gold hover:text-brand-goldDark">
               <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"/></svg>
               Add Semi Finalist
             </button>
           </div>
 
-          <!-- Highest Checkout (multi) -->
           <div>
             <label class="block font-medium mb-1">Highest Checkout (+2 points each)</label>
             <div id="highestCheckouts">
               <div class="flex gap-2 mb-2">
-                <input type="text" class="flex-1 border border-gray-300 rounded px-3 py-2" placeholder="Highest checkout 1">
-                <button onclick="removeHighestCheckouts(this)" class="text-red-500 hover:text-red-700" title="Remove">
-                  <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/>
-                  </svg>
+                <input type="text" class="flex-1 text-gray-800 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-gold/40 focus:border-brand-gold" placeholder="Highest checkout 1">
+                <button onclick="removeHighestCheckouts(this)" class="text-red-500 hover:text-red-600" title="Remove">
+                  <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/></svg>
                 </button>
               </div>
             </div>
-            <button onclick="addHighestCheckouts()" class="flex items-center gap-1 text-blue-500 hover:text-blue-700">
+            <button onclick="addHighestCheckouts()" class="flex items-center gap-1 text-brand-gold hover:text-brand-goldDark">
               <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"/></svg>
               Add Player
             </button>
@@ -147,58 +163,49 @@
         </div>
 
         <div class="space-y-4">
-          <!-- Group Winners -->
           <div>
             <label class="block font-medium mb-1">Group Winners (+3 points each)</label>
             <div id="groupWinners">
               <div class="flex gap-2 mb-2">
-                <input type="text" class="flex-1 border border-gray-300 rounded px-3 py-2" placeholder="Group winner 1">
-                <button onclick="removeGroupWinner(this)" class="text-red-500 hover:text-red-700" title="Remove">
-                  <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/>
-                  </svg>
+                <input type="text" class="flex-1 text-gray-800 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-gold/40 focus:border-brand-gold" placeholder="Group winner 1">
+                <button onclick="removeGroupWinner(this)" class="text-red-500 hover:text-red-600" title="Remove">
+                  <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/></svg>
                 </button>
               </div>
             </div>
-            <button onclick="addGroupWinner()" class="flex items-center gap-1 text-blue-500 hover:text-blue-700">
+            <button onclick="addGroupWinner()" class="flex items-center gap-1 text-brand-gold hover:text-brand-goldDark">
               <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"/></svg>
               Add Group Winner
             </button>
           </div>
 
-          <!-- Group Runners Up -->
           <div>
             <label class="block font-medium mb-1">Group Runners Up (+2 points each)</label>
             <div id="groupRunnersUp">
               <div class="flex gap-2 mb-2">
-                <input type="text" class="flex-1 border border-gray-300 rounded px-3 py-2" placeholder="Group runner up 1">
-                <button onclick="removeGroupRunnerUp(this)" class="text-red-500 hover:text-red-700" title="Remove">
-                  <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/>
-                  </svg>
+                <input type="text" class="flex-1 text-gray-800 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-gold/40 focus:border-brand-gold" placeholder="Group runner up 1">
+                <button onclick="removeGroupRunnerUp(this)" class="text-red-500 hover:text-red-600" title="Remove">
+                  <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/></svg>
                 </button>
               </div>
             </div>
-            <button onclick="addGroupRunnerUp()" class="flex items-center gap-1 text-blue-500 hover:text-blue-700">
+            <button onclick="addGroupRunnerUp()" class="flex items-center gap-1 text-brand-gold hover:text-brand-goldDark">
               <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"/></svg>
               Add Group Runner Up
             </button>
           </div>
 
-          <!-- Third/Fourth in Group (1 point only if eliminated next round) -->
           <div>
             <label class="block font-medium mb-1">3rd/4th in Group - Eliminated Next Round (1 point each)</label>
             <div id="thirdFourthEliminated">
               <div class="flex gap-2 mb-2">
-                <input type="text" class="flex-1 border border-gray-300 rounded px-3 py-2" placeholder="Player eliminated after group">
-                <button onclick="removeThirdFourthEliminated(this)" class="text-red-500 hover:text-red-700" title="Remove">
-                  <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/>
-                  </svg>
+                <input type="text" class="flex-1 text-gray-800 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-gold/40 focus:border-brand-gold" placeholder="Player eliminated after group">
+                <button onclick="removeThirdFourthEliminated(this)" class="text-red-500 hover:text-red-600" title="Remove">
+                  <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/></svg>
                 </button>
               </div>
             </div>
-            <button onclick="addThirdFourthEliminated()" class="flex items-center gap-1 text-blue-500 hover:text-blue-700">
+            <button onclick="addThirdFourthEliminated()" class="flex items-center gap-1 text-brand-gold hover:text-brand-goldDark">
               <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"/></svg>
               Add Player
             </button>
@@ -208,8 +215,8 @@
     </div>
 
     <!-- League Table -->
-    <div class="bg-white rounded-lg shadow-lg p-6">
-      <h2 class="text-2xl font-bold text-gray-800 mb-4">League Table</h2>
+    <div class="bg-white text-gray-800 rounded-xl2 shadow-card p-6">
+      <h2 class="text-2xl font-bold mb-4">League Table</h2>
 
       <div id="leagueTable" class="overflow-x-auto">
         <p class="text-gray-500 text-center py-8">No data entered yet.</p>
@@ -414,9 +421,9 @@
         const div = document.createElement('div');
         div.className = 'flex gap-2 mb-2';
         div.innerHTML = `
-          <input type="text" value="${value || ''}" class="flex-1 border border-gray-300 rounded px-3 py-2" placeholder="${getPlaceholder(containerId, index)}">
+          <input type="text" value="${value || ''}" class="flex-1 text-gray-800 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-gold/40 focus:border-brand-gold" placeholder="${getPlaceholder(containerId, index)}">
           ${values.length > 1 ? `
-            <button onclick="remove${capitalizeFirst(containerId)}(this)" class="text-red-500 hover:text-red-700" title="Remove">
+            <button onclick="remove${capitalizeFirst(containerId)}(this)" class="text-red-500 hover:text-red-600" title="Remove">
               <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/>
               </svg>
@@ -426,7 +433,6 @@
         container.appendChild(div);
       });
 
-      // Add change listeners
       container.querySelectorAll('input').forEach(input => {
         input.addEventListener('input', saveData);
       });
@@ -443,11 +449,9 @@
       return placeholders[containerId] || '';
     }
 
-    function capitalizeFirst(str) {
-      return str.charAt(0).toUpperCase() + str.slice(1);
-    }
+    function capitalizeFirst(str) { return str.charAt(0).toUpperCase() + str.slice(1); }
 
-    // Add/Remove functions
+    // Add/Remove helpers
     function addSemiFinalist() {
       if (!isAdmin) return;
       const container = document.getElementById('semiFinalists');
@@ -455,133 +459,77 @@
       const div = document.createElement('div');
       div.className = 'flex gap-2 mb-2';
       div.innerHTML = `
-        <input type="text" class="flex-1 border border-gray-300 rounded px-3 py-2" placeholder="Semi finalist ${count + 1}">
-        <button onclick="removeSemiFinalist(this)" class="text-red-500 hover:text-red-700" title="Remove">
-          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/>
-          </svg>
-        </button>
-      `;
+        <input type="text" class="flex-1 text-gray-800 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-gold/40 focus:border-brand-gold" placeholder="Semi finalist ${count + 1}">
+        <button onclick="removeSemiFinalist(this)" class="text-red-500 hover:text-red-600" title="Remove">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/></svg>
+        </button>`;
       container.appendChild(div);
       div.querySelector('input').addEventListener('input', saveData);
     }
-
-    function removeSemiFinalist(button) {
-      if (!isAdmin) return;
-      const container = document.getElementById('semiFinalists');
-      if (container.children.length > 1) {
-        button.parentElement.remove();
-        saveData();
-      }
-    }
+    function removeSemiFinalist(btn){ if(!isAdmin) return; const c=document.getElementById('semiFinalists'); if(c.children.length>1){ btn.parentElement.remove(); saveData(); } }
 
     function addGroupWinner() {
       if (!isAdmin) return;
-      const container = document.getElementById('groupWinners');
-      const count = container.children.length;
+      const c = document.getElementById('groupWinners');
+      const n = c.children.length;
       const div = document.createElement('div');
       div.className = 'flex gap-2 mb-2';
       div.innerHTML = `
-        <input type="text" class="flex-1 border border-gray-300 rounded px-3 py-2" placeholder="Group winner ${count + 1}">
-        <button onclick="removeGroupWinner(this)" class="text-red-500 hover:text-red-700" title="Remove">
-          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/>
-          </svg>
-        </button>
-      `;
-      container.appendChild(div);
+        <input type="text" class="flex-1 text-gray-800 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-gold/40 focus:border-brand-gold" placeholder="Group winner ${n + 1}">
+        <button onclick="removeGroupWinner(this)" class="text-red-500 hover:text-red-600" title="Remove">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/></svg>
+        </button>`;
+      c.appendChild(div);
       div.querySelector('input').addEventListener('input', saveData);
     }
-
-    function removeGroupWinner(button) {
-      if (!isAdmin) return;
-      const container = document.getElementById('groupWinners');
-      if (container.children.length > 1) {
-        button.parentElement.remove();
-        saveData();
-      }
-    }
+    function removeGroupWinner(btn){ if(!isAdmin) return; const c=document.getElementById('groupWinners'); if(c.children.length>1){ btn.parentElement.remove(); saveData(); } }
 
     function addGroupRunnerUp() {
       if (!isAdmin) return;
-      const container = document.getElementById('groupRunnersUp');
-      const count = container.children.length;
+      const c = document.getElementById('groupRunnersUp');
+      const n = c.children.length;
       const div = document.createElement('div');
       div.className = 'flex gap-2 mb-2';
       div.innerHTML = `
-        <input type="text" class="flex-1 border border-gray-300 rounded px-3 py-2" placeholder="Group runner up ${count + 1}">
-        <button onclick="removeGroupRunnerUp(this)" class="text-red-500 hover:text-red-700" title="Remove">
-          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/>
-          </svg>
-        </button>
-      `;
-      container.appendChild(div);
+        <input type="text" class="flex-1 text-gray-800 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-gold/40 focus:border-brand-gold" placeholder="Group runner up ${n + 1}">
+        <button onclick="removeGroupRunnerUp(this)" class="text-red-500 hover:text-red-600" title="Remove">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/></svg>
+        </button>`;
+      c.appendChild(div);
       div.querySelector('input').addEventListener('input', saveData);
     }
-
-    function removeGroupRunnerUp(button) {
-      if (!isAdmin) return;
-      const container = document.getElementById('groupRunnersUp');
-      if (container.children.length > 1) {
-        button.parentElement.remove();
-        saveData();
-      }
-    }
+    function removeGroupRunnerUp(btn){ if(!isAdmin) return; const c=document.getElementById('groupRunnersUp'); if(c.children.length>1){ btn.parentElement.remove(); saveData(); } }
 
     function addThirdFourthEliminated() {
       if (!isAdmin) return;
-      const container = document.getElementById('thirdFourthEliminated');
+      const c = document.getElementById('thirdFourthEliminated');
       const div = document.createElement('div');
       div.className = 'flex gap-2 mb-2';
       div.innerHTML = `
-        <input type="text" class="flex-1 border border-gray-300 rounded px-3 py-2" placeholder="Player eliminated after group">
-        <button onclick="removeThirdFourthEliminated(this)" class="text-red-500 hover:text-red-700" title="Remove">
-          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/>
-          </svg>
-        </button>
-      `;
-      container.appendChild(div);
+        <input type="text" class="flex-1 text-gray-800 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-gold/40 focus:border-brand-gold" placeholder="Player eliminated after group">
+        <button onclick="removeThirdFourthEliminated(this)" class="text-red-500 hover:text-red-600" title="Remove">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/></svg>
+        </button>`;
+      c.appendChild(div);
       div.querySelector('input').addEventListener('input', saveData);
     }
+    function removeThirdFourthEliminated(btn){ if(!isAdmin) return; const c=document.getElementById('thirdFourthEliminated'); if(c.children.length>1){ btn.parentElement.remove(); saveData(); } }
 
-    function removeThirdFourthEliminated(button) {
-      if (!isAdmin) return;
-      const container = document.getElementById('thirdFourthEliminated');
-      if (container.children.length > 1) {
-        button.parentElement.remove();
-        saveData();
-      }
-    }
-
-    // Highest Checkouts add/remove
     function addHighestCheckouts() {
       if (!isAdmin) return;
-      const container = document.getElementById('highestCheckouts');
-      const count = container.children.length;
+      const c = document.getElementById('highestCheckouts');
+      const n = c.children.length;
       const div = document.createElement('div');
       div.className = 'flex gap-2 mb-2';
       div.innerHTML = `
-        <input type="text" class="flex-1 border border-gray-300 rounded px-3 py-2" placeholder="Highest checkout ${count + 1}">
-        <button onclick="removeHighestCheckouts(this)" class="text-red-500 hover:text-red-700" title="Remove">
-          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/>
-          </svg>
-        </button>
-      `;
-      container.appendChild(div);
+        <input type="text" class="flex-1 text-gray-800 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-gold/40 focus:border-brand-gold" placeholder="Highest checkout ${n + 1}">
+        <button onclick="removeHighestCheckouts(this)" class="text-red-500 hover:text-red-600" title="Remove">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/></svg>
+        </button>`;
+      c.appendChild(div);
       div.querySelector('input').addEventListener('input', saveData);
     }
-
-    function removeHighestCheckouts(button) {
-      if (!isAdmin) return;
-      const container = document.getElementById('highestCheckouts');
-      if (container.children.length > 1) {
-        button.parentElement.remove();
-        saveData();
-      }
-    }
+    function removeHighestCheckouts(btn){ if(!isAdmin) return; const c=document.getElementById('highestCheckouts'); if(c.children.length>1){ btn.parentElement.remove(); saveData(); } }
 
     // Points calculation
     function calculateAllPoints() {
@@ -610,8 +558,6 @@
       // Calculate points for each week
       Object.entries(weekData).forEach(([week, data]) => {
         const weekNum = parseInt(week);
-
-        // Players who placed in the tournament (override 3rd/4th group elim)
         const tournamentPlayers = new Set();
 
         if (data.winner && data.winner.trim()) {
@@ -630,48 +576,44 @@
 
         (data.semiFinalists || []).forEach(name => {
           if (name && name.trim()) {
-            const trimmedName = name.trim();
-            tournamentPlayers.add(trimmedName);
-            playerPoints[trimmedName] += POINTS.tournamentSemiFinal;
-            playerWeeks[trimmedName].add(weekNum);
+            const t = name.trim();
+            tournamentPlayers.add(t);
+            playerPoints[t] += POINTS.tournamentSemiFinal;
+            playerWeeks[t].add(weekNum);
           }
         });
 
-        // Group winners (additive)
         (data.groupWinners || []).forEach(name => {
           if (name && name.trim()) {
-            const trimmedName = name.trim();
-            playerPoints[trimmedName] += POINTS.groupWinner;
-            playerWeeks[trimmedName].add(weekNum);
+            const t = name.trim();
+            playerPoints[t] += POINTS.groupWinner;
+            playerWeeks[t].add(weekNum);
           }
         });
 
-        // Group runners up (additive)
         (data.groupRunnersUp || []).forEach(name => {
           if (name && name.trim()) {
-            const trimmedName = name.trim();
-            playerPoints[trimmedName] += POINTS.groupRunnerUp;
-            playerWeeks[trimmedName].add(weekNum);
+            const t = name.trim();
+            playerPoints[t] += POINTS.groupRunnerUp;
+            playerWeeks[t].add(weekNum);
           }
         });
 
-        // Third/Fourth eliminated (only if NOT in tournament positions)
         (data.thirdFourthEliminated || []).forEach(name => {
           if (name && name.trim()) {
-            const trimmedName = name.trim();
-            if (!tournamentPlayers.has(trimmedName)) {
-              playerPoints[trimmedName] += POINTS.thirdFourthEliminated;
-              playerWeeks[trimmedName].add(weekNum);
+            const t = name.trim();
+            if (!tournamentPlayers.has(t)) {
+              playerPoints[t] += POINTS.thirdFourthEliminated;
+              playerWeeks[t].add(weekNum);
             }
           }
         });
 
-        // Highest checkouts (additive, multiple allowed)
         (data.highestCheckouts || []).forEach(name => {
           if (name && name.trim()) {
-            const trimmedName = name.trim();
-            playerPoints[trimmedName] += POINTS.highestCheckout;
-            playerWeeks[trimmedName].add(weekNum);
+            const t = name.trim();
+            playerPoints[t] += POINTS.highestCheckout;
+            playerWeeks[t].add(weekNum);
           }
         });
       });
@@ -686,7 +628,7 @@
       return { playerPoints, playerWeeks };
     }
 
-    // League table generation
+    // League table generation (gold header + subtle zebra rows)
     function updateLeagueTable() {
       const { playerPoints, playerWeeks } = calculateAllPoints();
 
@@ -706,31 +648,31 @@
       }
 
       let tableHTML = `
-        <table class="w-full border-collapse">
+        <table class="w-full border border-slate-200 rounded-lg overflow-hidden">
           <thead>
-            <tr class="bg-gray-100">
-              <th class="border border-gray-300 px-4 py-2 text-left">Position</th>
-              <th class="border border-gray-300 px-4 py-2 text-left">Player</th>
-              <th class="border border-gray-300 px-4 py-2 text-center">Total Points</th>
-              <th class="border border-gray-300 px-4 py-2 text-center">Weeks Played</th>
-              <th class="border border-gray-300 px-4 py-2 text-center">Attendance Bonus</th>
+            <tr class="bg-brand-gold text-black">
+              <th class="border border-brand-gold/0 px-4 py-2 text-left font-semibold">Position</th>
+              <th class="border border-brand-gold/0 px-4 py-2 text-left font-semibold">Player</th>
+              <th class="border border-brand-gold/0 px-4 py-2 text-center font-semibold">Total Points</th>
+              <th class="border border-brand-gold/0 px-4 py-2 text-center font-semibold">Weeks Played</th>
+              <th class="border border-brand-gold/0 px-4 py-2 text-center font-semibold">Attendance Bonus</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody class="divide-y divide-slate-200">
       `;
 
       leagueTable.forEach((player, index) => {
         const positionEmoji = index === 0 ? ' 🏆' : index === 1 ? ' 🥈' : index === 2 ? ' 🥉' : '';
-        const rowClass = index < 3 ? 'bg-yellow-50' : 'hover:bg-gray-50';
-        const attendanceBonus = player.weeksPlayed >= 6 ? '✅ +3' : '❌';
+        const rowClass = index < 3 ? 'bg-brand-gold/10' : 'odd:bg-white even:bg-slate-50 hover:bg-slate-100';
+        const attendanceBonus = player.weeksPlayed >= 6 ? '<span class="inline-flex items-center px-2 py-0.5 text-xs font-semibold rounded-full bg-emerald-100 text-emerald-700">+3</span>' : '<span class="text-slate-400">—</span>';
 
         tableHTML += `
           <tr class="${rowClass}">
-            <td class="border border-gray-300 px-4 py-2 font-semibold">${index + 1}${positionEmoji}</td>
-            <td class="border border-gray-300 px-4 py-2 font-medium">${player.name}</td>
-            <td class="border border-gray-300 px-4 py-2 text-center font-bold">${player.points}</td>
-            <td class="border border-gray-300 px-4 py-2 text-center">${player.weeksPlayed}/7</td>
-            <td class="border border-gray-300 px-4 py-2 text-center">${attendanceBonus}</td>
+            <td class="px-4 py-2 font-semibold">${index + 1}${positionEmoji}</td>
+            <td class="px-4 py-2 font-medium">${player.name}</td>
+            <td class="px-4 py-2 text-center font-bold">${player.points}</td>
+            <td class="px-4 py-2 text-center">${player.weeksPlayed}/7</td>
+            <td class="px-4 py-2 text-center">${attendanceBonus}</td>
           </tr>
         `;
       });
@@ -769,13 +711,8 @@
                 };
               }
 
-              if (row.Winner || row.winner) {
-                newWeekData[week].winner = (row.Winner || row.winner).trim();
-              }
-
-              if (row.RunnerUp || row.runnerUp || row['Runner Up']) {
-                newWeekData[week].runnerUp = (row.RunnerUp || row.runnerUp || row['Runner Up']).trim();
-              }
+              if (row.Winner || row.winner) newWeekData[week].winner = (row.Winner || row.winner).trim();
+              if (row.RunnerUp || row.runnerUp || row['Runner Up']) newWeekData[week].runnerUp = (row.RunnerUp || row.runnerUp || row['Runner Up']).trim();
 
               const s1 = (row.SemiFinalist1 || row.semiFinalist1 || row['Semi Finalist 1'] || '').trim();
               const s2 = (row.SemiFinalist2 || row.semiFinalist2 || row['Semi Finalist 2'] || '').trim();
@@ -783,25 +720,22 @@
 
               if (row.GroupWinners || row.groupWinners || row['Group Winners']) {
                 newWeekData[week].groupWinners = (row.GroupWinners || row.groupWinners || row['Group Winners'])
-                  .split(',').map(p => p.trim()).filter(p => p);
+                  .split(',').map(p => p.trim()).filter(Boolean);
               }
 
               if (row.GroupRunnersUp || row.groupRunnersUp || row['Group Runners Up']) {
                 newWeekData[week].groupRunnersUp = (row.GroupRunnersUp || row.groupRunnersUp || row['Group Runners Up'])
-                  .split(',').map(p => p.trim()).filter(p => p);
+                  .split(',').map(p => p.trim()).filter(Boolean);
               }
 
               if (row.ThirdFourthEliminated || row.thirdFourthEliminated || row['Third Fourth Eliminated']) {
                 newWeekData[week].thirdFourthEliminated = (row.ThirdFourthEliminated || row.thirdFourthEliminated || row['Third Fourth Eliminated'])
-                  .split(',').map(p => p.trim()).filter(p => p);
+                  .split(',').map(p => p.trim()).filter(Boolean);
               }
 
-              // Accept both singular and plural headers
               const hcField = (row.HighestCheckouts || row.highestCheckouts || row['Highest Checkouts'] ||
                                row.HighestCheckout || row.highestCheckout || row['Highest Checkout'] || '').trim();
-              if (hcField) {
-                newWeekData[week].highestCheckouts = hcField.split(',').map(p => p.trim()).filter(Boolean);
-              }
+              if (hcField) newWeekData[week].highestCheckouts = hcField.split(',').map(p => p.trim()).filter(Boolean);
             });
 
             weekData = { ...weekData, ...newWeekData };
@@ -820,7 +754,7 @@
       event.target.value = '';
     }
 
-    // CSV Export
+    // CSV Export (download)
     function exportCSV() {
       if (!isAdmin) return;
 
@@ -868,14 +802,12 @@
     document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('winner').addEventListener('input', saveData);
       document.getElementById('runnerUp').addEventListener('input', saveData);
-      // Highest Checkout is list-based; inputs created dynamically already bound in updateInputList/add functions
+      // Highest Checkout list inputs are added dynamically and already save on input.
     });
 
     // Auto-save on any input change
     document.addEventListener('input', function(e) {
-      if (isAdmin && e.target.tagName === 'INPUT') {
-        saveData();
-      }
+      if (isAdmin && e.target.tagName === 'INPUT') saveData();
     });
   </script>
 </body>
