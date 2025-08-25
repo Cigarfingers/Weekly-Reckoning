@@ -21,7 +21,7 @@
       <div class="space-y-4">
         <div>
           <label class="block text-sm font-medium mb-1">Password:</label>
-          <input type="password" id="adminPassword" class="w-full border border-gray-300 rounded px-3 py-2" placeholder="Enter admin password"/>
+          <input type="password" id="adminPassword" class="w-full border border-gray-300 rounded px-3 py-2" placeholder="Enter admin password">
         </div>
         <div class="flex gap-2">
           <button onclick="login()" class="flex-1 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Login</button>
@@ -41,6 +41,9 @@
           <h1 class="text-4xl font-bold text-gray-800 mb-2">The Weekly Reckoning</h1>
           <p class="text-lg text-gray-600">Discord Darts League Championship</p>
         </div>
+          <h1 class="text-4xl font-bold text-gray-800 mb-2">The Weekly Reckoning</h1>
+          <p class="text-lg text-gray-600">Discord Darts League Championship</p>
+        </div>
       </div>
 
       <!-- Admin Controls -->
@@ -48,15 +51,22 @@
         <div class="flex items-center gap-2">
           <label class="font-medium">Week:</label>
           <select id="weekSelect" onchange="setCurrentWeek(this.value)" class="border border-gray-300 rounded px-3 py-2">
-            <option value="1">Week 1</option><option value="2">Week 2</option><option value="3">Week 3</option>
-            <option value="4">Week 4</option><option value="5">Week 5</option><option value="6">Week 6</option><option value="7">Week 7</option>
+            <option value="1">Week 1</option>
+            <option value="2">Week 2</option>
+            <option value="3">Week 3</option>
+            <option value="4">Week 4</option>
+            <option value="5">Week 5</option>
+            <option value="6">Week 6</option>
+            <option value="7">Week 7</option>
           </select>
         </div>
 
         <label class="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded cursor-pointer hover:bg-blue-600">
-          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/></svg>
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+          </svg>
           Import CSV
-          <input type="file" accept=".csv" onchange="handleCSVImport(event)" class="hidden"/>
+          <input type="file" accept=".csv" onchange="handleCSVImport(event)" class="hidden">
         </label>
 
         <button onclick="exportCSV()" class="flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
@@ -69,7 +79,9 @@
           Clear All
         </button>
 
-        <button onclick="logout()" class="flex items-center gap-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Logout</button>
+        <button onclick="logout()" class="flex items-center gap-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
+          Logout
+        </button>
       </div>
 
       <!-- Week Data Entry (Admin Only) -->
@@ -80,13 +92,13 @@
           <!-- Tournament Winner -->
           <div>
             <label class="block font-medium mb-1">Tournament Winner (7 points)</label>
-            <input type="text" id="winner" class="w-full border border-gray-300 rounded px-3 py-2" placeholder="Enter winner name"/>
+            <input type="text" id="winner" class="w-full border border-gray-300 rounded px-3 py-2" placeholder="Enter winner name">
           </div>
 
           <!-- Tournament Runner Up -->
           <div>
             <label class="block font-medium mb-1">Tournament Runner Up (5 points)</label>
-            <input type="text" id="runnerUp" class="w-full border border-gray-300 rounded px-3 py-2" placeholder="Enter runner up name"/>
+            <input type="text" id="runnerUp" class="w-full border border-gray-300 rounded px-3 py-2" placeholder="Enter runner up name">
           </div>
 
           <!-- Tournament Semi Finalists -->
@@ -94,15 +106,19 @@
             <label class="block font-medium mb-1">Tournament Losing Semi Finalists (3 points each)</label>
             <div id="semiFinalists">
               <div class="flex gap-2 mb-2">
-                <input type="text" class="flex-1 border border-gray-300 rounded px-3 py-2" placeholder="Semi finalist 1"/>
-                <button onclick="removeSemiFinalist(this)" class="text-red-500 hover:text-red-700">
-                  <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/></svg>
+                <input type="text" class="flex-1 border border-gray-300 rounded px-3 py-2" placeholder="Semi finalist 1">
+                <button onclick="removeSemiFinalist(this)" class="text-red-500 hover:text-red-700" title="Remove">
+                  <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/>
+                  </svg>
                 </button>
               </div>
               <div class="flex gap-2 mb-2">
-                <input type="text" class="flex-1 border border-gray-300 rounded px-3 py-2" placeholder="Semi finalist 2"/>
-                <button onclick="removeSemiFinalist(this)" class="text-red-500 hover:text-red-700">
-                  <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/></svg>
+                <input type="text" class="flex-1 border border-gray-300 rounded px-3 py-2" placeholder="Semi finalist 2">
+                <button onclick="removeSemiFinalist(this)" class="text-red-500 hover:text-red-700" title="Remove">
+                  <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/>
+                  </svg>
                 </button>
               </div>
             </div>
@@ -117,9 +133,11 @@
             <label class="block font-medium mb-1">Highest Checkout (+2 points each)</label>
             <div id="highestCheckouts">
               <div class="flex gap-2 mb-2">
-                <input type="text" class="flex-1 border border-gray-300 rounded px-3 py-2" placeholder="Highest checkout 1"/>
-                <button onclick="removeHighestCheckouts(this)" class="text-red-500 hover:text-red-700">
-                  <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/></svg>
+                <input type="text" class="flex-1 border border-gray-300 rounded px-3 py-2" placeholder="Highest checkout 1">
+                <button onclick="removeHighestCheckouts(this)" class="text-red-500 hover:text-red-700" title="Remove">
+                  <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/>
+                  </svg>
                 </button>
               </div>
             </div>
@@ -136,9 +154,11 @@
             <label class="block font-medium mb-1">Group Winners (+3 points each)</label>
             <div id="groupWinners">
               <div class="flex gap-2 mb-2">
-                <input type="text" class="flex-1 border border-gray-300 rounded px-3 py-2" placeholder="Group winner 1"/>
-                <button onclick="removeGroupWinner(this)" class="text-red-500 hover:text-red-700">
-                  <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/></svg>
+                <input type="text" class="flex-1 border border-gray-300 rounded px-3 py-2" placeholder="Group winner 1">
+                <button onclick="removeGroupWinner(this)" class="text-red-500 hover:text-red-700" title="Remove">
+                  <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/>
+                  </svg>
                 </button>
               </div>
             </div>
@@ -153,9 +173,11 @@
             <label class="block font-medium mb-1">Group Runners Up (+2 points each)</label>
             <div id="groupRunnersUp">
               <div class="flex gap-2 mb-2">
-                <input type="text" class="flex-1 border border-gray-300 rounded px-3 py-2" placeholder="Group runner up 1"/>
-                <button onclick="removeGroupRunnerUp(this)" class="text-red-500 hover:text-red-700">
-                  <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/></svg>
+                <input type="text" class="flex-1 border border-gray-300 rounded px-3 py-2" placeholder="Group runner up 1">
+                <button onclick="removeGroupRunnerUp(this)" class="text-red-500 hover:text-red-700" title="Remove">
+                  <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/>
+                  </svg>
                 </button>
               </div>
             </div>
@@ -170,9 +192,11 @@
             <label class="block font-medium mb-1">3rd/4th in Group - Eliminated Next Round (1 point each)</label>
             <div id="thirdFourthEliminated">
               <div class="flex gap-2 mb-2">
-                <input type="text" class="flex-1 border border-gray-300 rounded px-3 py-2" placeholder="Player eliminated after group"/>
-                <button onclick="removeThirdFourthEliminated(this)" class="text-red-500 hover:text-red-700">
-                  <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/></svg>
+                <input type="text" class="flex-1 border border-gray-300 rounded px-3 py-2" placeholder="Player eliminated after group">
+                <button onclick="removeThirdFourthEliminated(this)" class="text-red-500 hover:text-red-700" title="Remove">
+                  <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/>
+                  </svg>
                 </button>
               </div>
             </div>
@@ -188,6 +212,7 @@
     <!-- League Table -->
     <div class="bg-white rounded-lg shadow-lg p-6">
       <h2 class="text-2xl font-bold text-gray-800 mb-4">League Table</h2>
+
       <div id="leagueTable" class="overflow-x-auto">
         <p class="text-gray-500 text-center py-8">No data entered yet.</p>
       </div>
@@ -214,7 +239,7 @@
 
   <script>
     // Configuration
-    const ADMIN_PASSWORD = "DDLAdmin2024"; // change as needed
+    const ADMIN_PASSWORD = "DDLAdmin2024"; // Change this to your desired password
 
     // State
     let weekData = {};
@@ -233,14 +258,15 @@
       attendanceBonus: 3
     };
 
-    // Init
-    document.addEventListener('DOMContentLoaded', function () {
-      loadData();
+    // Initialize
+    document.addEventListener('DOMContentLoaded', async function() {
+      loadData();                 // localStorage (admin browser)
+      await loadPublishedCSV();   // published CSV (for public view)
       updateUI();
       document.getElementById('loginModal').style.display = 'flex';
     });
 
-    // Auth
+    // Authentication
     function login() {
       const password = document.getElementById('adminPassword').value;
       if (password === ADMIN_PASSWORD) {
@@ -252,11 +278,13 @@
         alert('Incorrect password!');
       }
     }
+
     function viewOnly() {
       isAdmin = false;
       document.body.classList.remove('is-admin');
       document.getElementById('loginModal').style.display = 'none';
     }
+
     function logout() {
       isAdmin = false;
       document.body.classList.remove('is-admin');
@@ -270,8 +298,8 @@
       if (saved) {
         weekData = JSON.parse(saved);
 
-        // Migration: old single "highestCheckout" -> new array "highestCheckouts"
-        Object.keys(weekData).forEach((w) => {
+        // Migration: highestCheckout (string) -> highestCheckouts (array)
+        Object.keys(weekData).forEach(w => {
           const d = weekData[w];
           if (d && !Array.isArray(d.highestCheckouts)) {
             const val = (d.highestCheckout || '').trim();
@@ -279,6 +307,41 @@
             delete d.highestCheckout;
           }
         });
+      }
+    }
+
+    async function loadPublishedCSV() {
+      try {
+        const url = 'tournament_data.csv?v=' + Date.now(); // cache-bust
+        const resp = await fetch(url, { cache: 'no-store' });
+        if (!resp.ok) return; // not present yet
+        const text = await resp.text();
+
+        const results = Papa.parse(text, { header: true, skipEmptyLines: true });
+        const newWeekData = {};
+
+        results.data.forEach(row => {
+          const week = parseInt(row.Week || row.week);
+          if (!week || week < 1 || week > 7) return;
+
+          newWeekData[week] = {
+            winner: (row.Winner || '').trim(),
+            runnerUp: (row['Runner Up'] || '').trim(),
+            semiFinalists: [
+              (row['Semi Finalist 1'] || '').trim(),
+              (row['Semi Finalist 2'] || '').trim()
+            ].filter(Boolean),
+            groupWinners: (row['Group Winners'] || '').split(',').map(s => s.trim()).filter(Boolean),
+            groupRunnersUp: (row['Group Runners Up'] || '').split(',').map(s => s.trim()).filter(Boolean),
+            thirdFourthEliminated: (row['Third Fourth Eliminated'] || '').split(',').map(s => s.trim()).filter(Boolean),
+            highestCheckouts: (row['Highest Checkouts'] || row['Highest Checkout'] || '').split(',').map(s => s.trim()).filter(Boolean)
+          };
+        });
+
+        // Merge published data over local
+        weekData = { ...weekData, ...newWeekData };
+      } catch (e) {
+        console.warn('No published CSV or failed to load:', e);
       }
     }
 
@@ -292,20 +355,23 @@
 
     function saveCurrentWeekData() {
       if (!isAdmin) return;
+
       const data = {
         winner: document.getElementById('winner').value.trim(),
         runnerUp: document.getElementById('runnerUp').value.trim(),
-        semiFinalists: Array.from(document.querySelectorAll('#semiFinalists input')).map(i => i.value.trim()).filter(Boolean),
-        groupWinners: Array.from(document.querySelectorAll('#groupWinners input')).map(i => i.value.trim()).filter(Boolean),
-        groupRunnersUp: Array.from(document.querySelectorAll('#groupRunnersUp input')).map(i => i.value.trim()).filter(Boolean),
-        thirdFourthEliminated: Array.from(document.querySelectorAll('#thirdFourthEliminated input')).map(i => i.value.trim()).filter(Boolean),
-        highestCheckouts: Array.from(document.querySelectorAll('#highestCheckouts input')).map(i => i.value.trim()).filter(Boolean)
+        semiFinalists: Array.from(document.querySelectorAll('#semiFinalists input')).map(input => input.value.trim()).filter(v => v),
+        groupWinners: Array.from(document.querySelectorAll('#groupWinners input')).map(input => input.value.trim()).filter(v => v),
+        groupRunnersUp: Array.from(document.querySelectorAll('#groupRunnersUp input')).map(input => input.value.trim()).filter(v => v),
+        thirdFourthEliminated: Array.from(document.querySelectorAll('#thirdFourthEliminated input')).map(input => input.value.trim()).filter(v => v),
+        highestCheckouts: Array.from(document.querySelectorAll('#highestCheckouts input')).map(input => input.value.trim()).filter(v => v)
       };
+
       weekData[currentWeek] = data;
     }
 
     function setCurrentWeek(week) {
       if (!isAdmin) return;
+
       saveCurrentWeekData();
       currentWeek = parseInt(week);
       updateUI();
@@ -314,7 +380,10 @@
     function updateUI() {
       document.getElementById('currentWeekDisplay').textContent = currentWeek;
       document.getElementById('weekSelect').value = currentWeek;
-      if (isAdmin) loadCurrentWeekData();
+
+      if (isAdmin) {
+        loadCurrentWeekData();
+      }
       updateLeagueTable();
     }
 
@@ -342,19 +411,27 @@
     function updateInputList(containerId, values) {
       const container = document.getElementById(containerId);
       container.innerHTML = '';
+
       values.forEach((value, index) => {
         const div = document.createElement('div');
         div.className = 'flex gap-2 mb-2';
         div.innerHTML = `
           <input type="text" value="${value || ''}" class="flex-1 border border-gray-300 rounded px-3 py-2" placeholder="${getPlaceholder(containerId, index)}">
           ${values.length > 1 ? `
-            <button onclick="remove${capitalizeFirst(containerId)}(this)" class="text-red-500 hover:text-red-700">
-              <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/></svg>
-            </button>` : '' }
+            <button onclick="remove${capitalizeFirst(containerId)}(this)" class="text-red-500 hover:text-red-700" title="Remove">
+              <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/>
+              </svg>
+            </button>
+          ` : ''}
         `;
         container.appendChild(div);
       });
-      container.querySelectorAll('input').forEach(input => input.addEventListener('input', saveData));
+
+      // Add change listeners
+      container.querySelectorAll('input').forEach(input => {
+        input.addEventListener('input', saveData);
+      });
     }
 
     function getPlaceholder(containerId, index) {
@@ -368,9 +445,11 @@
       return placeholders[containerId] || '';
     }
 
-    function capitalizeFirst(str) { return str.charAt(0).toUpperCase() + str.slice(1); }
+    function capitalizeFirst(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
 
-    // Add/Remove helpers
+    // Add/Remove functions
     function addSemiFinalist() {
       if (!isAdmin) return;
       const container = document.getElementById('semiFinalists');
@@ -379,96 +458,131 @@
       div.className = 'flex gap-2 mb-2';
       div.innerHTML = `
         <input type="text" class="flex-1 border border-gray-300 rounded px-3 py-2" placeholder="Semi finalist ${count + 1}">
-        <button onclick="removeSemiFinalist(this)" class="text-red-500 hover:text-red-700">
-          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/></svg>
-        </button>`;
+        <button onclick="removeSemiFinalist(this)" class="text-red-500 hover:text-red-700" title="Remove">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/>
+          </svg>
+        </button>
+      `;
       container.appendChild(div);
       div.querySelector('input').addEventListener('input', saveData);
     }
-    function removeSemiFinalist(btn) {
+
+    function removeSemiFinalist(button) {
       if (!isAdmin) return;
-      const c = document.getElementById('semiFinalists');
-      if (c.children.length > 1) { btn.parentElement.remove(); saveData(); }
+      const container = document.getElementById('semiFinalists');
+      if (container.children.length > 1) {
+        button.parentElement.remove();
+        saveData();
+      }
     }
 
     function addGroupWinner() {
       if (!isAdmin) return;
-      const c = document.getElementById('groupWinners');
-      const n = c.children.length;
+      const container = document.getElementById('groupWinners');
+      const count = container.children.length;
       const div = document.createElement('div');
       div.className = 'flex gap-2 mb-2';
       div.innerHTML = `
-        <input type="text" class="flex-1 border border-gray-300 rounded px-3 py-2" placeholder="Group winner ${n + 1}">
-        <button onclick="removeGroupWinner(this)" class="text-red-500 hover:text-red-700">
-          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/></svg>
-        </button>`;
-      c.appendChild(div);
+        <input type="text" class="flex-1 border border-gray-300 rounded px-3 py-2" placeholder="Group winner ${count + 1}">
+        <button onclick="removeGroupWinner(this)" class="text-red-500 hover:text-red-700" title="Remove">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/>
+          </svg>
+        </button>
+      `;
+      container.appendChild(div);
       div.querySelector('input').addEventListener('input', saveData);
     }
-    function removeGroupWinner(btn) {
+
+    function removeGroupWinner(button) {
       if (!isAdmin) return;
-      const c = document.getElementById('groupWinners');
-      if (c.children.length > 1) { btn.parentElement.remove(); saveData(); }
+      const container = document.getElementById('groupWinners');
+      if (container.children.length > 1) {
+        button.parentElement.remove();
+        saveData();
+      }
     }
 
     function addGroupRunnerUp() {
       if (!isAdmin) return;
-      const c = document.getElementById('groupRunnersUp');
-      const n = c.children.length;
+      const container = document.getElementById('groupRunnersUp');
+      const count = container.children.length;
       const div = document.createElement('div');
       div.className = 'flex gap-2 mb-2';
       div.innerHTML = `
-        <input type="text" class="flex-1 border border-gray-300 rounded px-3 py-2" placeholder="Group runner up ${n + 1}">
-        <button onclick="removeGroupRunnerUp(this)" class="text-red-500 hover:text-red-700">
-          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/></svg>
-        </button>`;
-      c.appendChild(div);
+        <input type="text" class="flex-1 border border-gray-300 rounded px-3 py-2" placeholder="Group runner up ${count + 1}">
+        <button onclick="removeGroupRunnerUp(this)" class="text-red-500 hover:text-red-700" title="Remove">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/>
+          </svg>
+        </button>
+      `;
+      container.appendChild(div);
       div.querySelector('input').addEventListener('input', saveData);
     }
-    function removeGroupRunnerUp(btn) {
+
+    function removeGroupRunnerUp(button) {
       if (!isAdmin) return;
-      const c = document.getElementById('groupRunnersUp');
-      if (c.children.length > 1) { btn.parentElement.remove(); saveData(); }
+      const container = document.getElementById('groupRunnersUp');
+      if (container.children.length > 1) {
+        button.parentElement.remove();
+        saveData();
+      }
     }
 
     function addThirdFourthEliminated() {
       if (!isAdmin) return;
-      const c = document.getElementById('thirdFourthEliminated');
+      const container = document.getElementById('thirdFourthEliminated');
       const div = document.createElement('div');
       div.className = 'flex gap-2 mb-2';
       div.innerHTML = `
         <input type="text" class="flex-1 border border-gray-300 rounded px-3 py-2" placeholder="Player eliminated after group">
-        <button onclick="removeThirdFourthEliminated(this)" class="text-red-500 hover:text-red-700">
-          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/></svg>
-        </button>`;
-      c.appendChild(div);
+        <button onclick="removeThirdFourthEliminated(this)" class="text-red-500 hover:text-red-700" title="Remove">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/>
+          </svg>
+        </button>
+      `;
+      container.appendChild(div);
       div.querySelector('input').addEventListener('input', saveData);
     }
-    function removeThirdFourthEliminated(btn) {
+
+    function removeThirdFourthEliminated(button) {
       if (!isAdmin) return;
-      const c = document.getElementById('thirdFourthEliminated');
-      if (c.children.length > 1) { btn.parentElement.remove(); saveData(); }
+      const container = document.getElementById('thirdFourthEliminated');
+      if (container.children.length > 1) {
+        button.parentElement.remove();
+        saveData();
+      }
     }
 
     // Highest Checkouts add/remove
     function addHighestCheckouts() {
       if (!isAdmin) return;
-      const c = document.getElementById('highestCheckouts');
-      const n = c.children.length;
+      const container = document.getElementById('highestCheckouts');
+      const count = container.children.length;
       const div = document.createElement('div');
       div.className = 'flex gap-2 mb-2';
       div.innerHTML = `
-        <input type="text" class="flex-1 border border-gray-300 rounded px-3 py-2" placeholder="Highest checkout ${n + 1}">
-        <button onclick="removeHighestCheckouts(this)" class="text-red-500 hover:text-red-700">
-          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/></svg>
-        </button>`;
-      c.appendChild(div);
+        <input type="text" class="flex-1 border border-gray-300 rounded px-3 py-2" placeholder="Highest checkout ${count + 1}">
+        <button onclick="removeHighestCheckouts(this)" class="text-red-500 hover:text-red-700" title="Remove">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/>
+          </svg>
+        </button>
+      `;
+      container.appendChild(div);
       div.querySelector('input').addEventListener('input', saveData);
     }
-    function removeHighestCheckouts(btn) {
+
+    function removeHighestCheckouts(button) {
       if (!isAdmin) return;
-      const c = document.getElementById('highestCheckouts');
-      if (c.children.length > 1) { btn.parentElement.remove(); saveData(); }
+      const container = document.getElementById('highestCheckouts');
+      if (container.children.length > 1) {
+        button.parentElement.remove();
+        saveData();
+      }
     }
 
     // Points calculation
@@ -486,9 +600,8 @@
           ...(week.groupWinners || []),
           ...(week.groupRunnersUp || []),
           ...(week.thirdFourthEliminated || [])
-        ].filter(Boolean).forEach(name => {
+        ].filter(name => name && name.trim()).forEach(name => {
           const trimmedName = name.trim();
-          if (!trimmedName) return;
           if (!playerPoints[trimmedName]) {
             playerPoints[trimmedName] = 0;
             playerWeeks[trimmedName] = new Set();
@@ -496,88 +609,105 @@
         });
       });
 
-      // Weekly scoring
+      // Calculate points for each week
       Object.entries(weekData).forEach(([week, data]) => {
         const weekNum = parseInt(week);
+
+        // Players who placed in the tournament (override 3rd/4th group elim)
         const tournamentPlayers = new Set();
 
         if (data.winner && data.winner.trim()) {
-          const n = data.winner.trim();
-          tournamentPlayers.add(n);
-          playerPoints[n] += POINTS.tournamentWinner;
-          playerWeeks[n].add(weekNum);
+          const name = data.winner.trim();
+          tournamentPlayers.add(name);
+          playerPoints[name] += POINTS.tournamentWinner;
+          playerWeeks[name].add(weekNum);
         }
+
         if (data.runnerUp && data.runnerUp.trim()) {
-          const n = data.runnerUp.trim();
-          tournamentPlayers.add(n);
-          playerPoints[n] += POINTS.tournamentRunnerUp;
-          playerWeeks[n].add(weekNum);
+          const name = data.runnerUp.trim();
+          tournamentPlayers.add(name);
+          playerPoints[name] += POINTS.tournamentRunnerUp;
+          playerWeeks[name].add(weekNum);
         }
-        (data.semiFinalists || []).forEach(n => {
-          if (!n || !n.trim()) return;
-          const t = n.trim();
-          tournamentPlayers.add(t);
-          playerPoints[t] += POINTS.tournamentSemiFinal;
-          playerWeeks[t].add(weekNum);
+
+        (data.semiFinalists || []).forEach(name => {
+          if (name && name.trim()) {
+            const trimmedName = name.trim();
+            tournamentPlayers.add(trimmedName);
+            playerPoints[trimmedName] += POINTS.tournamentSemiFinal;
+            playerWeeks[trimmedName].add(weekNum);
+          }
         });
 
         // Group winners (additive)
-        (data.groupWinners || []).forEach(n => {
-          if (!n || !n.trim()) return;
-          const t = n.trim();
-          playerPoints[t] += POINTS.groupWinner;
-          playerWeeks[t].add(weekNum);
+        (data.groupWinners || []).forEach(name => {
+          if (name && name.trim()) {
+            const trimmedName = name.trim();
+            playerPoints[trimmedName] += POINTS.groupWinner;
+            playerWeeks[trimmedName].add(weekNum);
+          }
         });
 
         // Group runners up (additive)
-        (data.groupRunnersUp || []).forEach(n => {
-          if (!n || !n.trim()) return;
-          const t = n.trim();
-          playerPoints[t] += POINTS.groupRunnerUp;
-          playerWeeks[t].add(weekNum);
+        (data.groupRunnersUp || []).forEach(name => {
+          if (name && name.trim()) {
+            const trimmedName = name.trim();
+            playerPoints[trimmedName] += POINTS.groupRunnerUp;
+            playerWeeks[trimmedName].add(weekNum);
+          }
         });
 
-        // Third/Fourth (only if NOT a tournament player)
-        (data.thirdFourthEliminated || []).forEach(n => {
-          if (!n || !n.trim()) return;
-          const t = n.trim();
-          if (!tournamentPlayers.has(t)) {
-            playerPoints[t] += POINTS.thirdFourthEliminated;
-            playerWeeks[t].add(weekNum);
+        // Third/Fourth eliminated (only if NOT in tournament positions)
+        (data.thirdFourthEliminated || []).forEach(name => {
+          if (name && name.trim()) {
+            const trimmedName = name.trim();
+            if (!tournamentPlayers.has(trimmedName)) {
+              playerPoints[trimmedName] += POINTS.thirdFourthEliminated;
+              playerWeeks[trimmedName].add(weekNum);
+            }
           }
         });
 
         // Highest checkouts (additive, multiple allowed)
-        (data.highestCheckouts || []).forEach(n => {
-          if (!n || !n.trim()) return;
-          const t = n.trim();
-          playerPoints[t] += POINTS.highestCheckout;
-          playerWeeks[t].add(weekNum);
+        (data.highestCheckouts || []).forEach(name => {
+          if (name && name.trim()) {
+            const trimmedName = name.trim();
+            playerPoints[trimmedName] += POINTS.highestCheckout;
+            playerWeeks[trimmedName].add(weekNum);
+          }
         });
       });
 
       // Attendance bonus (6+ weeks)
       Object.keys(playerPoints).forEach(name => {
-        if (playerWeeks[name].size >= 6) playerPoints[name] += POINTS.attendanceBonus;
+        if (playerWeeks[name].size >= 6) {
+          playerPoints[name] += POINTS.attendanceBonus;
+        }
       });
 
       return { playerPoints, playerWeeks };
     }
 
-    // League table
+    // League table generation
     function updateLeagueTable() {
       const { playerPoints, playerWeeks } = calculateAllPoints();
+
       const leagueTable = Object.entries(playerPoints)
-        .map(([name, points]) => ({ name, points, weeksPlayed: playerWeeks[name].size }))
+        .map(([name, points]) => ({
+          name,
+          points,
+          weeksPlayed: playerWeeks[name].size
+        }))
         .sort((a, b) => b.points - a.points || b.weeksPlayed - a.weeksPlayed);
 
       const tableContainer = document.getElementById('leagueTable');
+
       if (leagueTable.length === 0) {
         tableContainer.innerHTML = '<p class="text-gray-500 text-center py-8">No data entered yet.</p>';
         return;
       }
 
-      let html = `
+      let tableHTML = `
         <table class="w-full border-collapse">
           <thead>
             <tr class="bg-gray-100">
@@ -588,36 +718,43 @@
               <th class="border border-gray-300 px-4 py-2 text-center">Attendance Bonus</th>
             </tr>
           </thead>
-          <tbody>`;
-      leagueTable.forEach((p, i) => {
-        const emoji = i === 0 ? ' 🏆' : i === 1 ? ' 🥈' : i === 2 ? ' 🥉' : '';
-        const rowClass = i < 3 ? 'bg-yellow-50' : 'hover:bg-gray-50';
-        const att = p.weeksPlayed >= 6 ? '✅ +3' : '❌';
-        html += `
+          <tbody>
+      `;
+
+      leagueTable.forEach((player, index) => {
+        const positionEmoji = index === 0 ? ' 🏆' : index === 1 ? ' 🥈' : index === 2 ? ' 🥉' : '';
+        const rowClass = index < 3 ? 'bg-yellow-50' : 'hover:bg-gray-50';
+        const attendanceBonus = player.weeksPlayed >= 6 ? '✅ +3' : '❌';
+
+        tableHTML += `
           <tr class="${rowClass}">
-            <td class="border border-gray-300 px-4 py-2 font-semibold">${i + 1}${emoji}</td>
-            <td class="border border-gray-300 px-4 py-2 font-medium">${p.name}</td>
-            <td class="border border-gray-300 px-4 py-2 text-center font-bold">${p.points}</td>
-            <td class="border border-gray-300 px-4 py-2 text-center">${p.weeksPlayed}/7</td>
-            <td class="border border-gray-300 px-4 py-2 text-center">${att}</td>
-          </tr>`;
+            <td class="border border-gray-300 px-4 py-2 font-semibold">${index + 1}${positionEmoji}</td>
+            <td class="border border-gray-300 px-4 py-2 font-medium">${player.name}</td>
+            <td class="border border-gray-300 px-4 py-2 text-center font-bold">${player.points}</td>
+            <td class="border border-gray-300 px-4 py-2 text-center">${player.weeksPlayed}/7</td>
+            <td class="border border-gray-300 px-4 py-2 text-center">${attendanceBonus}</td>
+          </tr>
+        `;
       });
-      html += '</tbody></table>';
-      tableContainer.innerHTML = html;
+
+      tableHTML += '</tbody></table>';
+      tableContainer.innerHTML = tableHTML;
     }
 
     // CSV Import
     function handleCSVImport(event) {
       if (!isAdmin) return;
+
       const file = event.target.files[0];
       if (!file) return;
 
       Papa.parse(file, {
         header: true,
         skipEmptyLines: true,
-        complete: function (results) {
+        complete: function(results) {
           try {
             const newWeekData = {};
+
             results.data.forEach(row => {
               const week = parseInt(row.Week || row.week);
               if (!week || week < 1 || week > 7) return;
@@ -634,24 +771,34 @@
                 };
               }
 
-              if (row.Winner || row.winner) newWeekData[week].winner = (row.Winner || row.winner).trim();
-              if (row.RunnerUp || row.runnerUp || row['Runner Up']) newWeekData[week].runnerUp = (row.RunnerUp || row.runnerUp || row['Runner Up']).trim();
+              if (row.Winner || row.winner) {
+                newWeekData[week].winner = (row.Winner || row.winner).trim();
+              }
+
+              if (row.RunnerUp || row.runnerUp || row['Runner Up']) {
+                newWeekData[week].runnerUp = (row.RunnerUp || row.runnerUp || row['Runner Up']).trim();
+              }
 
               const s1 = (row.SemiFinalist1 || row.semiFinalist1 || row['Semi Finalist 1'] || '').trim();
               const s2 = (row.SemiFinalist2 || row.semiFinalist2 || row['Semi Finalist 2'] || '').trim();
               newWeekData[week].semiFinalists = [s1, s2].filter(Boolean);
 
               if (row.GroupWinners || row.groupWinners || row['Group Winners']) {
-                newWeekData[week].groupWinners = (row.GroupWinners || row.groupWinners || row['Group Winners']).split(',').map(p => p.trim()).filter(Boolean);
-              }
-              if (row.GroupRunnersUp || row.groupRunnersUp || row['Group Runners Up']) {
-                newWeekData[week].groupRunnersUp = (row.GroupRunnersUp || row.groupRunnersUp || row['Group Runners Up']).split(',').map(p => p.trim()).filter(Boolean);
-              }
-              if (row.ThirdFourthEliminated || row.thirdFourthEliminated || row['Third Fourth Eliminated']) {
-                newWeekData[week].thirdFourthEliminated = (row.ThirdFourthEliminated || row.thirdFourthEliminated || row['Third Fourth Eliminated']).split(',').map(p => p.trim()).filter(Boolean);
+                newWeekData[week].groupWinners = (row.GroupWinners || row.groupWinners || row['Group Winners'])
+                  .split(',').map(p => p.trim()).filter(p => p);
               }
 
-              // Accept either "Highest Checkout" (single or comma list) or "Highest Checkouts"
+              if (row.GroupRunnersUp || row.groupRunnersUp || row['Group Runners Up']) {
+                newWeekData[week].groupRunnersUp = (row.GroupRunnersUp || row.groupRunnersUp || row['Group Runners Up'])
+                  .split(',').map(p => p.trim()).filter(p => p);
+              }
+
+              if (row.ThirdFourthEliminated || row.thirdFourthEliminated || row['Third Fourth Eliminated']) {
+                newWeekData[week].thirdFourthEliminated = (row.ThirdFourthEliminated || row.thirdFourthEliminated || row['Third Fourth Eliminated'])
+                  .split(',').map(p => p.trim()).filter(p => p);
+              }
+
+              // Accept both singular and plural headers
               const hcField = (row.HighestCheckouts || row.highestCheckouts || row['Highest Checkouts'] ||
                                row.HighestCheckout || row.highestCheckout || row['Highest Checkout'] || '').trim();
               if (hcField) {
@@ -663,11 +810,13 @@
             saveData();
             updateUI();
             alert('CSV imported successfully!');
-          } catch (e) {
-            alert('Error importing CSV: ' + e.message);
+          } catch (error) {
+            alert('Error importing CSV: ' + error.message);
           }
         },
-        error: function (error) { alert('Error reading CSV file: ' + error.message); }
+        error: function(error) {
+          alert('Error reading CSV file: ' + error.message);
+        }
       });
 
       event.target.value = '';
@@ -676,6 +825,7 @@
     // CSV Export
     function exportCSV() {
       if (!isAdmin) return;
+
       const csvData = [];
       for (let week = 1; week <= 7; week++) {
         const data = weekData[week];
@@ -686,14 +836,14 @@
             'Runner Up': data.runnerUp || '',
             'Semi Finalist 1': (data.semiFinalists && data.semiFinalists[0]) || '',
             'Semi Finalist 2': (data.semiFinalists && data.semiFinalists[1]) || '',
-            'Group Winners': (data.groupWinners || []).join(', '),
-            'Group Runners Up': (data.groupRunnersUp || []).join(', '),
-            'Third Fourth Eliminated': (data.thirdFourthEliminated || []).join(', '),
-            // write plural header but remains compatible on re-import
-            'Highest Checkouts': (data.highestCheckouts || []).join(', ')
+            'Group Winners': (data.groupWinners || []).filter(p => p.trim()).join(', '),
+            'Group Runners Up': (data.groupRunnersUp || []).filter(p => p.trim()).join(', '),
+            'Third Fourth Eliminated': (data.thirdFourthEliminated || []).filter(p => p.trim()).join(', '),
+            'Highest Checkouts': (data.highestCheckouts || []).filter(p => p.trim()).join(', ')
           });
         }
       }
+
       const csv = Papa.unparse(csvData);
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
       const link = document.createElement('a');
@@ -707,6 +857,7 @@
     // Clear all data
     function clearAllData() {
       if (!isAdmin) return;
+
       if (confirm('Are you sure you want to clear all data? This cannot be undone.')) {
         weekData = {};
         localStorage.removeItem('tournamentData');
@@ -715,16 +866,18 @@
       }
     }
 
-    // Main input listeners
-    document.addEventListener('DOMContentLoaded', function () {
+    // Event listeners for inputs
+    document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('winner').addEventListener('input', saveData);
       document.getElementById('runnerUp').addEventListener('input', saveData);
-      // no single highestCheckout listener anymore (now list-based)
+      // Highest Checkout is list-based; inputs created dynamically already bound in updateInputList/add functions
     });
 
-    // Auto-save on any input
-    document.addEventListener('input', function (e) {
-      if (isAdmin && e.target.tagName === 'INPUT') saveData();
+    // Auto-save on any input change
+    document.addEventListener('input', function(e) {
+      if (isAdmin && e.target.tagName === 'INPUT') {
+        saveData();
+      }
     });
   </script>
 </body>
