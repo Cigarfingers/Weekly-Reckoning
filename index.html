@@ -199,6 +199,16 @@
         <p class="text-slate-500 text-center py-8">No data entered yet.</p>
       </div>
 
+      <!-- Emoji Legend -->
+      <div class="mt-4 text-sm text-slate-600">
+        <span class="font-semibold">Legend:</span>
+        <span class="ml-2">🏆 1st</span> &middot;
+        <span>🥈 2nd</span> &middot;
+        <span>🥉 3rd</span> &middot;
+        <span>🏁 Qualified for Finals (4–8)</span> &middot;
+        <span>✅ +3 Attendance (6+ weeks)</span>
+      </div>
+
       <!-- Points Legend -->
       <div class="mt-6 p-4 bg-slate-50 rounded-lg">
         <h3 class="font-semibold mb-2">Points System:</h3>
@@ -574,7 +584,11 @@
       `;
 
       leagueTable.forEach((player, index) => {
-        const positionEmoji = index === 0 ? ' 🏆' : index === 1 ? ' 🥈' : index === 2 ? ' 🥉' : '';
+        // medals for top 3; finals qualifier flag for places 4–8 (index 3..7)
+        const medal = index === 0 ? ' 🏆' : index === 1 ? ' 🥈' : index === 2 ? ' 🥉' : '';
+        const qualifier = (index >= 3 && index <= 7) ? ' 🏁' : '';
+        const positionEmoji = `${medal}${qualifier}`;
+
         const rowClass = index < 3 ? 'bg-yellow-50' : 'odd:bg-white even:bg-slate-50 hover:bg-slate-100';
         const attendanceBonus = player.weeksPlayed >= 6
           ? '<span class="inline-flex items-center px-2 py-0.5 text-xs font-semibold rounded-full bg-emerald-100 text-emerald-700">+3</span>'
